@@ -16,10 +16,10 @@ public class VoteDemo {
 
     public static void main(String[] args) {
         String url = "http://www.sjz95580.com/Vote/Vote.ashx?requestMethod=DoVote&openID=";
-        String configId = "c3beaa9e-b059-42ad-8971-22be86df73df";
-        int sendCount = 10;
+        String configId = "31318507-d932-4b1a-8db2-dffe9ce60d37";
+        int sendCount = 1000;
 
-        int threadCount = 10;
+        int threadCount = 5;
         ExecutorService threadPool = Executors.newFixedThreadPool(threadCount);
 
         for (int i = 0; i < sendCount; ++i) {
@@ -28,11 +28,11 @@ public class VoteDemo {
 
         try {
             threadPool.shutdown();
-            threadPool.awaitTermination(10, TimeUnit.SECONDS);
+            threadPool.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("vote :" + VoteTask.counter.get());
+        System.out.println("send " + sendCount + " finished!");
     }
 
 }
@@ -52,11 +52,7 @@ class VoteTask implements Runnable {
         StringBuilder sb = new StringBuilder();
         sb.append(url).append(openId).append("&type=1&configID=").append(configId);
         String res = post(sb.toString(), "");
-        System.out.println(res);
-        if (res.contains("true")) {
-            counter.incrementAndGet();
-        }
-        
+        System.out.println(counter.getAndIncrement() + "    :" + res);
     }
 
     public String post(String strURL, String params) {
