@@ -17,9 +17,9 @@ public class VoteDemo {
     public static void main(String[] args) {
         String url = "http://www.sjz95580.com/Vote/Vote.ashx?requestMethod=DoVote&openID=";
         String configId = "31318507-d932-4b1a-8db2-dffe9ce60d37";
-        int sendCount = 1000;
+        int sendCount = 10;
 
-        int threadCount = 5;
+        int threadCount = 1;
         ExecutorService threadPool = Executors.newFixedThreadPool(threadCount);
 
         for (int i = 0; i < sendCount; ++i) {
